@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>100 Gamers Dijeron</title>
+    <style>
+        /* Estilos CSS (iguales para todas las páginas) */
+        :root {
+            --fondo-principal: #FADADD;
+            --caja-principal: #FFC0CB;
+            --rosa-brillante: #FF69B4;
+            --morado-oscuro: #8A2BE2;
+            --blanco-texto: #FFFFFF;
+            --texto-oscuro: #333333;
+            --rosa-oscuro-boton: #E0607E;
+            --fallo-color: #E74C3C;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--fondo-principal);
+            color: var(--texto-oscuro);
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin-top: 10px;
+            padding: 30px;
+            background-color: var(--caja-principal);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.7s ease-in-out;
+        }
+
+        .container.visible {
+            opacity: 1;
+        }
+
+        /* Estilo para las preguntas del juego */
+        .container h1 {
+            font-size: 2.5em;
+            color: var(--blanco-texto);
+            margin-bottom: 30px;
+            position: relative;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-shadow:
+                -2px 2px 0 var(--rosa-brillante),
+                -4px 4px 0 var(--rosa-brillante),
+                -6px 6px 0 var(--rosa-brillante),
+                -8px 8px 0 var(--rosa-brillante),
+                -10px 10px 0 var(--rosa-brillante);
+            animation: textJump 1s ease-in-out infinite alternate;
+        }
+
+        /* Estilo para el mensaje de inicio (con animación de salto y sombra) */
+        #mensaje-inicial {
+            margin-bottom: 0px;
+            font-size: 4em;
+            color: var(--blanco-texto);
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-shadow:
+                -2px 2px 0 var(--rosa-brillante),
+                -4px 4px 0 var(--rosa-brillante),
+                -6px 6px 0 var(--rosa-brillante),
+                -8px 8px 0 var(--rosa-brillante),
+                -10px 10px 0 var(--rosa-brillante);
+            animation: textJump 1s ease-in-out infinite alternate, animacion-sombra 4s ease-in-out infinite;
+        }
+       
+        /* Estilo para el mensaje de ganador - ¡ACTUALIZADO! */
+        #ganador-mensaje {
+            font-size: 3em;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--blanco-texto);
+            text-shadow:
+                -2px 2px 0 var(--rosa-brillante),
+                -4px 4px 0 var(--rosa-brillante),
+                -6px 6px 0 var(--rosa-brillante),
+                -8px 8px 0 var(--rosa-brillante),
+                -10px 10px 0 var(--rosa-brillante);
+            animation: textJump 1s ease-in-out infinite alternate;
+            margin-top: 15px; /* Ajustado para estar más cerca */
+            padding-top: 0px;
+        }
+       
+        @keyframes textJump {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-5px);
+            }
+        }
+       
+        @keyframes animacion-sombra {
+            0% {
+                text-shadow:
+                    -2px 2px 0 var(--rosa-brillante),
+                    -4px 4px 0 var(--rosa-brillante),
+                    -6px 6px 0 var(--rosa-brillante),
+                    -8px 8px 0 var(--rosa-brillante),
+                    -10px 10px 0 var(--rosa-brillante);
+            }
+            25% {
+                text-shadow:
+                    2px 2px 0 var(--rosa-brillante),
+                    4px 4px 0 var(--rosa-brillante),
+                    6px 6px 0 var(--rosa-brillante),
+                    8px 8px 0 var(--rosa-brillante),
+                    10px 10px 0 var(--rosa-brillante);
+            }
+            50% {
+                text-shadow:
+                    -2px -2px 0 var(--rosa-brillante),
+                    -4px -4px 0 var(--rosa-brillante),
+                    -6px -6px 0 var(--rosa-brillante),
+                    -8px -8px 0 var(--rosa-brillante),
+                    -10px -10px 0 var(--rosa-brillante);
+            }
+            75% {
+                text-shadow:
+                    2px -2px 0 var(--rosa-brillante),
+                    4px -4px 0 var(--rosa-brillante),
+                    6px -6px 0 var(--rosa-brillante),
+                    8px -8px 0 var(--rosa-brillante),
+                    10px -10px 0 var(--rosa-brillante);
+            }
+            100% {
+                text-shadow:
+                    -2px 2px 0 var(--rosa-brillante),
+                    -4px 4px 0 var(--rosa-brillante),
+                    -6px 6px 0 var(--rosa-brillante),
+                    -8px 8px 0 var(--rosa-brillante),
+                    -10px 10px 0 var(--rosa-brillante);
+            }
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: var(--morado-oscuro);
+            margin-bottom: 15px;
+        }
+       
+        #puntos-ronda {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--rosa-brillante);
+            text-shadow: 1px 1px 2px var(--morado-oscuro);
+            margin-bottom: 20px;
+        }
+       
+        .respuesta {
+            background-color: var(--morado-oscuro);
+            color: var(--blanco-texto);
+            padding: 18px;
+            margin: 9px auto;
+            width: 65%;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .respuesta:hover {
+            background-color: #6A1BAA;
+            transform: translateY(-3px);
+        }
+
+        .respuesta.visible {
+            background-color: var(--rosa-brillante);
+            color: var(--blanco-texto);
+        }
+
+        .respuesta .contenido-visible {
+            visibility: hidden;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .respuesta .contenido-tapa {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .respuesta.visible .contenido-visible {
+            visibility: visible;
+        }
+
+        .respuesta.visible .contenido-tapa {
+            display: none;
+        }
+
+        .fallos-container {
+            margin-top: 10px;
+            padding: 0;
+            background-color: transparent;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        #fallos {
+            min-height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .fallo {
+            color: var(--fallo-color);
+            font-size: 3.5em;
+            font-weight: bold;
+            margin: 0 10px;
+            animation: fadeIn 0.5s ease-out;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 10px;
+            z-index: 102;
+            position: relative;
+        }
+       
+        .action-buttons-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 20px;
+        }
+       
+        .action-buttons-container button {
+            background-color: var(--morado-oscuro);
+            color: var(--blanco-texto);
+            text-transform: none;
+        }
+       
+        .score-transfer-buttons-container {
+            display: none;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.3em;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+        }
+
+        #boton-fallo {
+            background-color: var(--morado-oscuro);
+            color: var(--blanco-texto);
+        }
+
+        #boton-fallo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        #boton-siguiente {
+            background-color: var(--rosa-oscuro-boton);
+            color: var(--blanco-texto);
+        }
+
+        #boton-siguiente:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+       
+        #dar-puntos-equipo1, #dar-puntos-equipo2, #boton-siguiente-pregunta, #boton-ver-resultados {
+            background-color: var(--morado-oscuro);
+            color: var(--blanco-texto);
+        }
+       
+        #dar-puntos-equipo1:hover, #dar-puntos-equipo2:hover, #boton-siguiente-pregunta:hover, #boton-ver-resultados:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .door {
+            position: fixed;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background-color: var(--morado-oscuro);
+            z-index: 100;
+            transition: transform 0.7s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .door.left {
+            left: 0;
+            transform: translateX(0);
+        }
+        .door.right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .door.left.open {
+            transform: translateX(-100%);
+        }
+
+        .door.right.open {
+            transform: translateX(100%);
+        }
+
+        .door-image-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 101;
+            padding-top: 5vh; /* Ajustado para subir el contenido */
+        }
+
+        .door-image-container.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .door-image {
+            max-width: 90%;
+            max-height: 55vh;
+            object-fit: contain;
+            margin-top: 0px;
+        }
+       
+        /* El margin-top del #ganador-mensaje ya se ajustó arriba */
+       
+        .score-final {
+            color: var(--blanco-texto);
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px var(--morado-oscuro);
+            margin-top: 10px; /* Reducido para que se vea más pegado */
+            padding-top: 0px;
+        }
+       
+        /* Estilos para los marcadores de equipo */
+        .score-box {
+            position: fixed;
+            top: 20px;
+            width: 150px;
+            background-color: var(--morado-oscuro);
+            color: var(--blanco-texto);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+       
+        .score-box.visible {
+            opacity: 1;
+        }
+       
+        #equipo1-score-box { left: 20px; }
+        #equipo2-score-box { right: 20px; }
+       
+        .score-box span {
+            display: block;
+        }
+       
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.js"></script>
+</head>
+<body>
+    <div class="score-box" id="equipo1-score-box">
+        <span>Equipo 1</span>
+        <span id="equipo1-score">0</span>
+    </div>
+    <div class="score-box" id="equipo2-score-box">
+        <span>Equipo 2</span>
+        <span id="equipo2-score">0</span>
+    </div>
+   
+    <div class="container" id="game-container">
+        <h1 id="pregunta"></h1>
+        <h2 id="puntos-ronda">Puntos de la ronda: 0</h2>
+        <div id="respuestas-container"></div>
+        <div class="fallos-container">
+            <h2 id="fallos-titulo">Fallos:</h2>
+            <div id="fallos"></div>
+        </div>
+       
+        <div class="action-buttons-container" id="action-buttons-container">
+            <button id="boton-fallo">Marcar Fallo</button>
+            <button id="boton-siguiente">Asignar puntos</button>
+        </div>
+       
+        <div class="score-transfer-buttons-container" id="score-transfer-buttons-container">
+            <button id="dar-puntos-equipo1">Dar puntos a Equipo 1</button>
+            <button id="dar-puntos-equipo2">Dar puntos a Equipo 2</button>
+        </div>
+       
+        <div class="action-buttons-container" id="next-question-container" style="display: none;">
+            <button id="boton-siguiente-pregunta">Siguiente Pregunta</button>
+            <button id="boton-ver-resultados" style="display: none;">Ver Resultados</button>
+        </div>
+    </div>
+
+    <div class="door left" id="left-door"></div>
+    <div class="door right" id="right-door"></div>
+   
+    <div class="door-image-container visible" id="door-image-container">
+        <h1 id="mensaje-inicial">Bienvenidos a...</h1>
+        <img src="imagen-inicial.png" alt="Pantalla de inicio" class="door-image" id="door-image">
+        <h1 id="ganador-mensaje"></h1> 
+        <h3 id="final-score-equipo1" class="score-final"></h3>
+        <h3 id="final-score-equipo2" class="score-final"></h3>
+    </div>
+
+    <script>
+        const sonidoAcierto = new Audio('sonido-correcto.mp3');
+        const sonidoFallo = new Audio('sonido-falla.mp3');
+       
+        sonidoAcierto.addEventListener('canplaythrough', function() {
+            this.volume = 0.3;
+        });
+
+        sonidoFallo.addEventListener('canplaythrough', function() {
+            this.volume = 0.2;
+        });
+       
+        // --- Preguntas con puntos ajustados ---
+        const preguntas = [
+            { pregunta: "Algo que se pone duro cuando hace frío", respuestas: [{ texto: "Helado", puntos: 41 }, { texto: "Metal", puntos: 37 }, { texto: "Agua", puntos: 13 }, { texto: "Palo", puntos: 9 }] },
+            { pregunta: "Algo que se saca con cuidado", respuestas: [{ texto: "Diente", puntos: 41 }, { texto: "Foto de la pared", puntos: 35 }, { texto: "Archivos", puntos: 15 }, { texto: "Tarjeta", puntos: 9 }] },
+            { pregunta: "Algo que se mete rápido y duele si no está bien", respuestas: [{ texto: "Clavo", puntos: 41 }, { texto: "Aguja", puntos: 36 }, { texto: "Llave", puntos: 16 }, { texto: "Diente", puntos: 7 }] },
+            { pregunta: "Fruta favorita de silver", respuestas: [{ texto: "Fresa", puntos: 40 }, { texto: "Frambuesa", puntos: 27 }, { texto: "Zarzamora", puntos: 19 }, { texto: "Mora azul", puntos: 14 }] },
+            { pregunta: "Nombra alguno de los 12 perros de silver", respuestas: [{ texto: "Loki", puntos: 46 }, { texto: "Chaquetas", puntos: 29 }, { texto: "Bombón", puntos: 17 }, { texto: "Jimmy", puntos: 8 }] },
+            { pregunta: "Un error común en los streams", respuestas: [{ texto: "Quedarse sin internet", puntos: 43 }, { texto: "Audio sin configurar", puntos: 31 }, { texto: "Que se trabe el juego", puntos: 19 }, { texto: "Olvidar prender micro", puntos: 7 }] },
+            { pregunta: "Algo que emociona a los viewers en un directo", respuestas: [{ texto: "Sorteos", puntos: 48 }, { texto: "Partidas épicas", puntos: 34 }, { texto: "Aparición invitados", puntos: 13 }, { texto: "Reacciones divertidas", puntos: 5 }] },
+            { pregunta: "Que suele comer silver en directo", respuestas: [{ texto: "Maruchan", puntos: 34 }, { texto: "Frituras", puntos: 29 }, { texto: "Fruta", puntos: 21 }, { texto: "Comida", puntos: 16 }] },
+            { pregunta: "A qué animal le tiene miedo silver", respuestas: [{ texto: "Arañas", puntos: 39 }, { texto: "Roedores", puntos: 26 }, { texto: "Serpientes", puntos: 23 }, { texto: "Lagartijas", puntos: 12 }] }
+        ];
+
+        // --- Variables de control ---
+        let indicePreguntaActual = 0;
+        let fallos = 0;
+        let juegoIniciado = false;
+        const maxFallos = 3;
+        let puntajeEquipo1 = 0;
+        let puntajeEquipo2 = 0;
+        let puntosRondaActual = 0;
+        let confettiInterval; 
+
+        // --- Elementos del DOM ---
+        const gameContainerEl = document.getElementById('game-container');
+        const preguntaEl = document.getElementById('pregunta');
+        const respuestasContainerEl = document.getElementById('respuestas-container');
+        const fallosTituloEl = document.getElementById('fallos-titulo');
+        const fallosEl = document.getElementById('fallos');
+        const botonFalloEl = document.getElementById('boton-fallo');
+        const botonSiguienteEl = document.getElementById('boton-siguiente');
+        const leftDoor = document.getElementById('left-door');
+        const rightDoor = document.getElementById('right-door');
+        const doorImageContainer = document.getElementById('door-image-container');
+        const doorImage = document.getElementById('door-image');
+        const ganadorMensaje = document.getElementById('ganador-mensaje');
+        const finalScoreEquipo1El = document.getElementById('final-score-equipo1');
+        const finalScoreEquipo2El = document.getElementById('final-score-equipo2');
+        const mensajeInicialEl = document.getElementById('mensaje-inicial');
+       
+        const scoreBox1 = document.getElementById('equipo1-score-box');
+        const scoreBox2 = document.getElementById('equipo2-score-box');
+        const score1El = document.getElementById('equipo1-score');
+        const score2El = document.getElementById('equipo2-score');
+       
+        const actionButtonsContainer = document.getElementById('action-buttons-container');
+        const scoreTransferButtonsContainer = document.getElementById('score-transfer-buttons-container');
+        const nextQuestionContainer = document.getElementById('next-question-container');
+        const botonSiguientePreguntaEl = document.getElementById('boton-siguiente-pregunta');
+        const botonVerResultadosEl = document.getElementById('boton-ver-resultados');
+       
+        const darPuntosEquipo1Btn = document.getElementById('dar-puntos-equipo1');
+        const darPuntosEquipo2Btn = document.getElementById('dar-puntos-equipo2');
+        const puntosRondaEl = document.getElementById('puntos-ronda');
+
+        function cargarPregunta() {
+            const preguntaActual = preguntas[indicePreguntaActual];
+            preguntaEl.textContent = preguntaActual.pregunta;
+            mostrarRespuestas(preguntaActual);
+            fallos = 0;
+            fallosEl.innerHTML = '';
+            fallosTituloEl.style.display = 'block';
+            puntosRondaActual = 0;
+            puntosRondaEl.textContent = 'Puntos de la ronda: 0';
+            actionButtonsContainer.style.display = 'flex';
+            scoreTransferButtonsContainer.style.display = 'none';
+            nextQuestionContainer.style.display = 'none';
+
+            // Lógica para mostrar el botón correcto
+            if (indicePreguntaActual === preguntas.length - 1) {
+                botonSiguientePreguntaEl.style.display = 'none';
+                botonVerResultadosEl.style.display = 'inline-block';
+            } else {
+                botonSiguientePreguntaEl.style.display = 'inline-block';
+                botonVerResultadosEl.style.display = 'none';
+            }
+        }
+
+        function finalizarJuego() {
+            gameContainerEl.classList.remove('visible');
+            actionButtonsContainer.style.display = 'none';
+            scoreTransferButtonsContainer.style.display = 'none';
+            nextQuestionContainer.style.display = 'none';
+            fallosTituloEl.style.display = 'none';
+            scoreBox1.classList.remove('visible');
+            scoreBox2.classList.remove('visible');
+           
+            // Cerrar las puertas
+            leftDoor.classList.remove('open');
+            rightDoor.classList.remove('open');
+           
+            // Determinar el ganador
+            if (puntajeEquipo1 > puntajeEquipo2) {
+                doorImage.src = 'imagen-inicial.png';
+                ganadorMensaje.textContent = '¡Gana el Equipo 1!';
+            } else if (puntajeEquipo2 > puntajeEquipo1) {
+                doorImage.src = 'imagen-inicial.png';
+                ganadorMensaje.textContent = '¡Gana el Equipo 2!';
+            } else {
+                doorImage.src = 'imagen-inicial.png';
+                ganadorMensaje.textContent = '¡Es un empate!';
+            }
+           
+            finalScoreEquipo1El.textContent = `Puntaje Equipo 1: ${puntajeEquipo1}`;
+            finalScoreEquipo2El.textContent = `Puntaje Equipo 2: ${puntajeEquipo2}`;
+           
+            doorImageContainer.classList.add('visible');
+
+            if (confettiInterval) {
+                clearInterval(confettiInterval);
+            }
+            confettiInterval = setInterval(() => {
+                confetti({
+                    particleCount: 80,
+                    spread: 90,
+                    startVelocity: 40,
+                    origin: { x: 0.5, y: 0.4 },
+                    colors: ['#f2e8ea', '#FF69B4', '#8A2BE2', '#FFFFFF']
+                });
+            }, 1500);
+        }
+
+        function mostrarRespuestas(pregunta) {
+            respuestasContainerEl.innerHTML = '';
+            pregunta.respuestas.forEach((respuesta, index) => {
+                const respuestaEl = document.createElement('div');
+                respuestaEl.classList.add('respuesta');
+                respuestaEl.setAttribute('data-points', respuesta.puntos);
+                respuestaEl.innerHTML = `<div class="contenido-tapa"><span>Respuesta ${index + 1}</span><span>Puntos</span></div><div class="contenido-visible"><span>${respuesta.texto}</span><span>${respuesta.puntos}</span></div>`;
+                respuestaEl.addEventListener('click', () => {
+                    mostrarRespuesta(respuestaEl);
+                    sonidoAcierto.play();
+                });
+                respuestasContainerEl.appendChild(respuestaEl);
+            });
+        }
+
+        function mostrarRespuesta(elemento) {
+            elemento.classList.add('visible');
+            elemento.style.pointerEvents = 'none';
+            const puntos = parseInt(elemento.getAttribute('data-points'));
+            puntosRondaActual += puntos;
+            puntosRondaEl.textContent = `Puntos de la ronda: ${puntosRondaActual}`;
+        }
+
+        function marcarFallo() {
+            const fallosActuales = fallosEl.querySelectorAll('.fallo').length;
+            if (fallosActuales < maxFallos) {
+                fallos++;
+                const xEl = document.createElement('span');
+                xEl.classList.add('fallo');
+                xEl.textContent = 'X';
+                fallosEl.appendChild(xEl);
+                sonidoFallo.play().catch(e => console.log("Fallo al reproducir el sonido:", e));
+            }
+        }
+       
+        function mostrarOpcionesSiguienteRonda() {
+            actionButtonsContainer.style.display = 'none';
+            scoreTransferButtonsContainer.style.display = 'flex';
+        }
+       
+        function finalizarRonda(equipo) {
+            if (equipo === 1) {
+                puntajeEquipo1 += puntosRondaActual;
+                score1El.textContent = puntajeEquipo1;
+            } else {
+                puntajeEquipo2 += puntosRondaActual;
+                score2El.textContent = puntajeEquipo2;
+            }
+           
+            scoreTransferButtonsContainer.style.display = 'none';
+            nextQuestionContainer.style.display = 'flex';
+        }
+
+        // Nueva función para reiniciar el juego
+        function reiniciarJuego() {
+            juegoIniciado = false;
+            indicePreguntaActual = 0;
+            fallos = 0;
+            puntajeEquipo1 = 0;
+            puntajeEquipo2 = 0;
+            puntosRondaActual = 0;
+
+            score1El.textContent = '0';
+            score2El.textContent = '0';
+            fallosEl.innerHTML = '';
+            ganadorMensaje.textContent = '';
+            finalScoreEquipo1El.textContent = '';
+            finalScoreEquipo2El.textContent = '';
+           
+            if (confettiInterval) {
+                clearInterval(confettiInterval);
+                confettiInterval = null;
+            }
+           
+            doorImage.src = 'imagen-inicial.png';
+            doorImageContainer.classList.add('visible');
+            doorImageContainer.style.pointerEvents = 'auto';
+            leftDoor.classList.remove('open');
+            rightDoor.classList.remove('open');
+            mensajeInicialEl.style.display = 'block';
+        }
+
+        function iniciarJuego() {
+            juegoIniciado = true;
+            leftDoor.classList.add('open');
+            rightDoor.classList.add('open');
+            mensajeInicialEl.style.display = 'none';
+           
+            setTimeout(() => {
+                doorImageContainer.classList.remove('visible');
+                doorImageContainer.style.pointerEvents = 'none';
+            }, 500);
+
+            setTimeout(() => {
+                gameContainerEl.classList.add('visible');
+                scoreBox1.classList.add('visible');
+                scoreBox2.classList.add('visible');
+                cargarPregunta();
+            }, 700);
+        }
+
+        botonFalloEl.addEventListener('click', marcarFallo);
+        botonSiguienteEl.addEventListener('click', mostrarOpcionesSiguienteRonda);
+        darPuntosEquipo1Btn.addEventListener('click', () => finalizarRonda(1));
+        darPuntosEquipo2Btn.addEventListener('click', () => finalizarRonda(2));
+       
+        botonSiguientePreguntaEl.addEventListener('click', () => {
+            indicePreguntaActual++;
+            cargarPregunta();
+        });
+
+        botonVerResultadosEl.addEventListener('click', finalizarJuego);
+
+        doorImageContainer.addEventListener('click', () => {
+            if (!juegoIniciado) {
+                iniciarJuego();
+            } else {
+                reiniciarJuego();
+            }
+        });
+    </script>
+</body>
+</html>
